@@ -135,7 +135,7 @@ class EnhancedSignalController:
     def update_detections(self, 
                           lane_vehicles: List,
                           pedestrians: List,
-                          oncoming_vehicles: List = None) -> SignalPhase:
+                          oncoming_vehicles: List = None) -> SignalPhase: # pyright: ignore[reportArgumentType]
         """
         Update with real-time detections and determine next phase
         
