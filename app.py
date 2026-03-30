@@ -202,7 +202,7 @@ def render_signal_status():
         st.markdown(f"""
         <div class="signal-card signal-pedestrian">
             <h2 style="margin: 0;">{phase}</h2>
-            <p style="margin: 0.5rem 0 0 0;">🚶 Pedestrians crossing - STOP</p>
+            <p style="margin: 0.5rem 0 0 0;">Pedestrians crossing - STOP</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -212,7 +212,7 @@ def render_signal_status():
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-value">{state['blocking_vehicles']}</div>
-            <div class="metric-label">🚗 Blocking</div>
+            <div class="metric-label">Blocking</div>
         </div>
         """, unsafe_allow_html=True)
     with col2:
@@ -226,14 +226,14 @@ def render_signal_status():
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-value">{state['phase_duration']:.0f}s</div>
-            <div class="metric-label">⏱️ Duration</div>
+            <div class="metric-label">Duration</div>
         </div>
         """, unsafe_allow_html=True)
     with col4:
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-value">{state['protected_triggers']}</div>
-            <div class="metric-label">🔄 Interventions</div>
+            <div class="metric-label">Interventions</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -249,7 +249,7 @@ def render_analytics():
     """Render analytics dashboard"""
     app = st.session_state.app_state
     
-    st.markdown("### 📊 System Analytics")
+    st.markdown("### System Analytics")
     
     if app.stats_history:
         df = pd.DataFrame(app.stats_history[-100:])
@@ -275,7 +275,7 @@ def render_analytics():
 
 def render_manual_region_config():
     """Render manual region configuration"""
-    st.subheader("🎯 Manual Region Configuration")
+    st.subheader("Manual Region Configuration")
     
     app = st.session_state.app_state
     width, height = app.frame_width, app.frame_height
@@ -290,7 +290,7 @@ def render_manual_region_config():
         lane_y2 = st.number_input("Bottom Y", 0, height, height-120, key="lane_y2")
         lane_region = [(lane_x1, lane_y1), (lane_x2, lane_y1), (lane_x2, lane_y2), (lane_x1, lane_y2)]
         
-        if st.button("✅ Apply Lane", key="apply_lane"):
+        if st.button("Apply Lane", key="apply_lane"):
             app.lane_region = lane_region
             if app.detector:
                 app.detector.lane_region = lane_region
@@ -304,7 +304,7 @@ def render_manual_region_config():
         cross_y2 = st.number_input("Bottom Y", 0, height, height//2+50, key="cross_y2")
         crossing_region = [(cross_x1, cross_y1), (cross_x2, cross_y1), (cross_x2, cross_y2), (cross_x1, cross_y2)]
         
-        if st.button("✅ Apply Crossing", key="apply_crossing"):
+        if st.button("Apply Crossing", key="apply_crossing"):
             app.crossing_region = crossing_region
             if app.detector:
                 app.detector.set_manual_crossing(crossing_region)
@@ -315,16 +315,16 @@ def render_manual_region_config():
 
 def render_video_source(key="main"):
     """Render video source selection"""
-    st.subheader(f"📹 {key.capitalize()} Source")
+    st.subheader(f" {key.capitalize()} Source")
     
     source_type = st.radio(
         "Source Type",
-        ["📷 Live Camera", "🎬 Video File"],
+        [" Live Camera", "🎬 Video File"],
         horizontal=True,
         key=f"source_type_{key}"
     )
     
-    if source_type == "📷 Live Camera":
+    if source_type == " Live Camera":
         camera_id = st.selectbox("Camera", ["Webcam (0)", "External (1)"], index=0, key=f"camera_{key}")
         camera_index = int(camera_id.split("(")[1].split(")")[0])
         
@@ -422,7 +422,7 @@ def render_realtime_feed():
             if ped_annotated is not None:
                 st.image(ped_annotated, channels="BGR", use_container_width=True, caption="Pedestrian Camera")
             else:
-                st.info("📹 Pedestrian camera not available")
+                st.info(" Pedestrian camera not available")
     else:
         if annotated is not None:
             st.image(annotated, channels="BGR", use_container_width=True)
@@ -431,23 +431,23 @@ def render_realtime_feed():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("### 🚗 Free-Left Lane")
+        st.markdown("###  Free-Left Lane")
         blocking_count = stats.get('blocking_count', 0)
         if blocking_count > 0:
-            st.warning(f"⚠️ {blocking_count} vehicle(s) in lane")
+            st.warning(f" {blocking_count} vehicle(s) in lane")
         else:
-            st.success("✅ Lane clear")
+            st.success(" Lane clear")
     
     with col2:
-        st.markdown("### 🚶 Pedestrian Status")
+        st.markdown("### Pedestrian Status")
         ped_count = stats.get('pedestrian_count', 0)
         if ped_count > 0:
-            st.info(f"🚶 {ped_count} pedestrian(s) at crossing")
+            st.info(f" {ped_count} pedestrian(s) at crossing")
         else:
-            st.success("✅ No pedestrians")
+            st.success(" No pedestrians")
     
     with col3:
-        st.markdown("### 📊 Detection Stats")
+        st.markdown("###  Detection Stats")
         st.metric("FPS", f"{stats.get('fps', 0):.1f}")
         st.metric("Vehicles", stats.get('tracked_vehicles', 0))
         st.metric("Pedestrians", stats.get('tracked_pedestrians', 0))
@@ -459,13 +459,13 @@ def render_realtime_feed():
 def render_sidebar():
     """Render sidebar controls"""
     with st.sidebar:
-        st.markdown("## 🎮 System Controls")
+        st.markdown("##  System Controls")
         
         mode = st.radio("Select Mode", ["📊 Dataset Analysis", "📹 Real-time Monitoring"])
         st.divider()
         
         if mode == "📹 Real-time Monitoring":
-            st.markdown("### ⚙️ Settings")
+            st.markdown("###  Settings")
             
             auto_detect = st.checkbox("🤖 Auto-Detect Zebra Crossing", value=st.session_state.app_state.auto_detect_crossing)
             st.session_state.app_state.auto_detect_crossing = auto_detect
@@ -478,7 +478,7 @@ def render_sidebar():
             st.divider()
             
             # Camera Setup
-            st.markdown("### 📹 Camera Setup")
+            st.markdown("###  Camera Setup")
             
             camera_mode = st.radio("Camera Mode", ["Single Camera", "Dual Camera"], horizontal=True)
             st.session_state.app_state.dual_camera_mode = (camera_mode == "Dual Camera")
@@ -505,7 +505,7 @@ def render_sidebar():
             # Start/Stop
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("▶️ START", type="primary", use_container_width=True):
+                if st.button(" START", type="primary", use_container_width=True):
                     if main_source:
                         app = st.session_state.app_state
                         
@@ -543,7 +543,7 @@ def render_sidebar():
                         st.warning("Select a source first")
             
             with col2:
-                if st.button("⏹️ STOP", use_container_width=True):
+                if st.button("⏹ STOP", use_container_width=True):
                     app = st.session_state.app_state
                     app.is_running = False
                     if app.video_source:
@@ -558,28 +558,28 @@ def render_sidebar():
             st.divider()
             
             # Manual Override
-            st.markdown("### 🔧 Manual Override")
+            st.markdown("###  Manual Override")
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("🔒 Protected Left", use_container_width=True):
+                if st.button(" Protected Left", use_container_width=True):
                     st.session_state.app_state.controller.manual_protect()
                     st.success("Protected left activated")
             with col2:
-                if st.button("🚶 Pedestrian Mode", use_container_width=True):
+                if st.button("Pedestrian Mode", use_container_width=True):
                     st.session_state.app_state.controller.manual_pedestrian()
                     st.success("Pedestrian mode activated")
             
-            if st.button("🔄 Reset to Auto", use_container_width=True):
+            if st.button(" Reset to Auto", use_container_width=True):
                 st.session_state.app_state.controller.manual_reset()
                 st.info("Auto mode restored")
         
         else:
             # Dataset Analysis
-            st.markdown("### 📄 Upload Dataset")
+            st.markdown("###  Upload Dataset")
             uploaded = st.file_uploader("Upload Traffic Data PDF", type=['pdf'])
             
             if uploaded:
-                if st.button("🔍 Analyze Dataset", type="primary", use_container_width=True):
+                if st.button(" Analyze Dataset", type="primary", use_container_width=True):
                     with st.spinner("Analyzing..."):
                         try:
                             temp_path = os.path.join(tempfile.gettempdir(), uploaded.name)
@@ -594,7 +594,7 @@ def render_sidebar():
                             st.session_state.app_state.analysis_results = analysis
                             st.session_state.analysis_complete = True
                             st.session_state.app_state.controller.integrate_dataset(analysis)
-                            st.success("✅ Analysis complete!")
+                            st.success(" Analysis complete!")
                         except Exception as e:
                             st.error(f"Error: {str(e)}")
             
@@ -616,7 +616,7 @@ def render_dataset_results():
     if not results:
         return
     
-    st.markdown("### 📊 Dataset Analysis Results")
+    st.markdown("###  Dataset Analysis Results")
     
     risk = results.get('risk_assessment', {})
     st.markdown(f"**Risk Level:** {risk.get('level', 'UNKNOWN')} (Score: {risk.get('score', 0)}/100)")
@@ -667,12 +667,12 @@ def main():
         if st.session_state.analysis_complete and st.session_state.app_state.analysis_results:
             render_dataset_results()
         else:
-            st.info("📄 Upload a PDF dataset from the sidebar to begin analysis")
+            st.info(" Upload a PDF dataset from the sidebar to begin analysis")
         render_analytics()
     
     st.markdown("""
     <div class="footer">
-        <p>🚦 Intelligent Free Left Turn Management System | AI-Powered Traffic Management</p>
+        <p>Intelligent Free Left Turn Management System | AI-Powered Traffic Management</p>
     </div>
     """, unsafe_allow_html=True)
 
