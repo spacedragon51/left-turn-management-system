@@ -1,4 +1,5 @@
 Intelligent-Free-Left-Turn-Management-System
+
 An AI-powered traffic management system designed to optimize free-left turn efficiency, reduce congestion, and enhance road safety using real-time vehicle detection, dataset analysis, and adaptive signal control.
 
 📌 Overview
