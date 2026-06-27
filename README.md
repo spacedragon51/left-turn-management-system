@@ -62,7 +62,7 @@ Data Processing: Pandas
 Visualization: Plotly
 PDF Parsing: pdfplumber
 Backend Logic: Python
-Installation 1️⃣ Clone the Repository git clone https://github.com/spacedragon51/left-turn-management-system/.git cd free-left-turn-ai 2️⃣ Create Virtual Environment python -m venv venv source venv/bin/activate # Windows: venv\Scripts\activate 3️⃣ Install Dependencies pip install -r requirements.txt ▶️ Usage Run the Application : streamlit run app.py
+Installation 1️⃣ Clone the Repository git clone https://github.com/spacedragon51/left-turn-management-system.git cd free-left-turn-ai 2️⃣ Create Virtual Environment python -m venv venv source venv/bin/activate # Windows: venv\Scripts\activate 3️⃣ Install Dependencies pip install -r requirements.txt ▶️ Usage Run the Application : streamlit run app.py
 
 How It Works
 
